@@ -1,0 +1,63 @@
+# Simulation output
+**/results
+**/out_messages.txt
+
+
+# figures except the ones in /figures
+**/*.jpg
+**/*.gif
+**/*.pdf
+**/*.eps
+**/*.png
+**/*.ps
+**/*.mp4
+!figures/figures.pdf
+!manuscript/*.pdf
+!manuscript/figures/*
+!documentation/*.pdf
+
+# indesign files
+**/*.indd
+!figures/figures.indd
+**/*.idlk
+
+# photoshop files
+**/*.psd
+
+# R History & Rproj files
+.Rhistory
+.Rproj.user
+*.Rproj
+**/*.html
+
+# Texniccenter generated files
+**/*.tcp
+**/*.tps
+
+**/*.html
+
+# LaTeX help files
+**/*.aux
+**/*.glo
+**/*.idx
+**/*.log
+**/*.toc
+**/*.ist
+**/*.acn
+**/*.acr
+**/*.alg
+**/*.bbl
+**/*.blg
+**/*.dvi
+**/*.glg
+**/*.gls
+**/*.ilg
+**/*.ind
+**/*.lof
+**/*.lot
+**/*.maf
+**/*.mtc
+**/*.mtc1
+**/*.out
+**/*.synctex.gz
+**/*.synctex

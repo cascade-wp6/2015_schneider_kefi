@@ -8,7 +8,7 @@ This repository contains the original source code for a simulation study within 
 
 ## Project outline
 
-Spatial models of vegetation cover so far have considered grazing mortality a rather constant pressure, affecting all plants equally, regardless of their position in space. In the known models it usually adds as a constant to the individual plant risk ([Kéfi et al 2007 *Theoretical Population Biology*, 71:367379](http://www.sciencedirect.com/science/article/pii/S0040580906001250)). However, grazing has a strong spatial component: Many plants in rangelands invest in protective structures such as thorns or spines, or develop growth forms that reduce their vulnerability to grazing.
+Spatial models of vegetation cover so far have considered grazing mortality a rather constant pressure, affecting all plants equally, regardless of their position in space. In the known models it usually adds as a constant to the individual plant risk ([Kéfi et al 2007 *Theoretical Population Biology*, 71:367--379](http://www.sciencedirect.com/science/article/pii/S0040580906001250)). However, grazing has a strong spatial component: Many plants in rangelands invest in protective structures such as thorns or spines, or develop growth forms that reduce their vulnerability to grazing.
 Therefore, plants growing next to each other benefit from the protection of their neighbors.
 
 Such **associational resistance** is widely acknowledged in vegetation ecology but hardly integrated in models as a cause for spatially heterogenous grazing pressure. It also renders the plant mortality density dependent, which has important impacts on the bistability of the system.
@@ -93,22 +93,29 @@ fitPL(psd, p_spanning, n = NULL)
 ```
 
 **The function is quite specific and requires refinement to be re-used in other projects!** It requires a valid object `psd` which is a `data.frame` containing cumulative patch-size distributions, i.e. a table with a column called `s` with the particular sizes occuring in the landscape, and a column called `p` with the probability of any patch being equal or larger than that size. 
-The object `psd` can contain pooled data from multiple landscapes (combined into one data.frame using `rbind()`).
-The function fits three alternative cumulative patch-size distribution functions, a limited power-law (up-bent), a straight power-law, and a truncated power-law (down-bent). 
+The object `psd` can contain pooled data from multiple landscapes (combined into one data.frame using `rbind()`).  
+The function fits three alternative cumulative patch-size distribution functions, a limited power-law (up-bent), a straight power-law, and a truncated power-law (down-bent).  
 The returned object is a list with the entries TPLdown, PL, TPLup, containing the respective model outputs, as well as AIC, dAIC and best, which contains the AIC of the models, the delta AIC in respect to the lowest AIC value, and the ID number of the best model (2 = truncated power-law; 3 = straight power-law; 4 = limited power-law).
 
 ### simulation code
 
-- core simulation code
+#### core simulation code (`simulation.r`)
 
-- simulation of the vegetated state
+This code is the core implementation of a cellular automaton with 'local facilitation' and 'associational resistance'. It can be used to explore the parameter range manually. 
 
-- simulation of the envelope of homogeneous grazing
-
-- sumulation of the recovery from low vegetation cover
+The code contains a switch for associational resistance. If `parameters$assoc == FALSE` the grazing mortality still depends on the global vegetation cover, i.e. a mean field assumption on associational resistance.  
 
 
+#### simulation of the vegetated state (`sim_vegetated.r`)
 
+#### simulation of the envelope of homogeneous grazing (`sim_bifurcation.r`)
+
+#### sumulation of the recovery from low vegetation cover (`sim_desert.r`)
+
+
+### Parallel backend requirements
+
+The function `foreach()` (of the R package [foreach](http://cran.r-project.org/web/packages/foreach/index.html)) that evokes the simulation for each parameter set makes use of a parallel backend, but falls back to sequential execution if none is provided. See the package documentation. For instance, the libraries [doSNOW](http://cran.r-project.org/web/packages/doSNOW/index.html) and [snow](http://cran.r-project.org/web/packages/snow/index.html) can provide a parallel backend in R.
 
 ## License
 

@@ -1,7 +1,7 @@
 ########################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2014 Florian D. Schneider
+# Copyright (c) 2014 Florian D. Schneider & Sonia Kéfi
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -123,6 +123,10 @@ patches <- function(x, state) {
   
 } 
 
+
+########################
+## fitting Power Laws ##
+########################
 
 
 fitPL <- function(psd, p_spanning, n = NULL) {

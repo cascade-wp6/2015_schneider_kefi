@@ -1,3 +1,5 @@
+
+
 # Simulation output
 **/results
 **/out_messages.txt
@@ -12,9 +14,9 @@
 **/*.ps
 **/*.mp4
 !figures/figures.pdf
-!manuscript/*.pdf
-!manuscript/figures/*
-!documentation/*.pdf
+
+# documentation
+!README.pdf
 
 # indesign files
 **/*.indd

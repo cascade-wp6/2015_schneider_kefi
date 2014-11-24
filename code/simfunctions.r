@@ -146,16 +146,16 @@ fitPL <- function(psd, p_spanning, n = NULL) {
   PLlm <- lm(I(log(p)) ~  1 - I(log(size)) , data = psd) 
   
   ###########
-  
-  try( {out$TPLdown <- nls(I(log(p)) ~ alpha * log(size) + Sx * (1 - size) , 
+
+  try( {out$TPLdown <- nls(I(log(p)) ~ I( alpha*log(size)-size*Sx ),
                            data = psd,
-                           start = list(alpha =  PLlm$coefficients, Sx = 1/1000),
+                           start = list(alpha =  PLlm$coefficients, Sx = 1/200),
                            #algorithm = "port",
                            trace = FALSE
   )}, silent = TRUE
   )    
   
-  if(!is.null(out$TPLdown) & !coefficients(out$TPLdown)["Sx"] <= 0) {
+  if(!is.null(out$TPLdown) & !coefficients(out$TPLdown)["Sx"] <= 0 ) {
     out$AIC[1] <- AIC(out$TPLdown) 
   } else {
     out$TPLdown <- list(NA)

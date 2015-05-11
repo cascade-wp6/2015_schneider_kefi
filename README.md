@@ -1,4 +1,4 @@
-# Spatially explicit grazing raises risk of catastrophic shifts in drylands
+# Spatially heterogeneous pressure raises risk of catastrophic shifts
 by [Florian Schneider](https://fdschneider.github.io) and [Sonia Kéfi](https://sonia.kefi.fr) ([Institut des Sciences de l'Evolution de Montpellier (ISEM), CNRS, IRD, University of Montpellier 2](http://www.isem.univ-montp2.fr/))  
 
 
@@ -8,21 +8,19 @@ This repository contains the original source code for a simulation study within 
 
 # Project outline
 
-Spatial models of vegetation cover so far have considered grazing mortality a rather constant pressure, affecting all plants equally, regardless of their position in space. In the known models it usually adds as a constant to the individual plant risk ([Kéfi et al 2007 *Theoretical Population Biology*, 71:367--379](http://www.sciencedirect.com/science/article/pii/S0040580906001250)). However, grazing has a strong spatial component: Many plants in rangelands invest in protective structures such as thorns or spines, or develop growth forms that reduce their vulnerability to grazing.
-Therefore, plants growing next to each other benefit from the protection of their neighbors.
+Many ecosystems show abrupt, unexpected responses to external pressures with irreversible alterations in ecological functions and services. Such catastrophic shifts and the search for generic early warning signs have attracted a lot of attention in the literature lately (see Scheffer et al. 2001; Scheffer et al. 2009; Dakos et al. 2012; Kéfi et al. 2014 for recent reviews). Particularly, spatial indicators such as the patch-size distribution, which are relatively easy to assess using remote sensing techniques, could provide useful tools for sustainable land use management (Rietkerk et al. 2004; Kéfi et al. 2007; Kéfi et al. 2014).
 
-Such **associational resistance** is widely acknowledged in vegetation ecology but hardly integrated in models as a cause for spatially heterogenous grazing pressure. It also renders the plant mortality density dependent, which has important impacts on the bistability of the system.
+Until now, the theoretical foundations of early warning signs of catastrophic shifts have largely assumed that the pressures exerted on ecosystems distribute homogeneously in space. While this may be valid for certain types of pressure (e.g. temperature or precipitation), it is most certainly not true for others such as herbivore foraging. Our manuscript provides a novel perspective on early warning signs of catastrophic shifts in ecosystems by integrating a spatially-explicit pressure in a dryland vegetation model.
 
-We investigate how the assumption of spatially heterogeneous pressure alters the bistability properties and the response of spatial indicators of catastrophic shifts.
+We show that spatially heterogeneous pressure not only increases the chance of catastrophic shifts at the ecosystem scale but also interferes with the pattern formation process, which alters the nature of the relevant spatial indicators of degradation.
+
+Our manuscript thus contributes to improving the fundamental understanding of dryland functioning and resilience but also more generally to the critical evaluation of the reliability and applicability of spatial indicators of catastrophic shifts in biological systems under spatially-explicit pressures.
 
 ## approach
 
 Over a dual gradient of environmental and grazing pressure, we simulate  the steady state of vegetation if starting from high vegetation cover. Complementary, we simulate how likely a degraded landscape is to restore if only few plants are left. The overlap of the vegetated state and the persistent desert is the domain of bistability. 
 
 Besides vegetation cover, we investigate which patterns of vegetation establish under the different types of pressure.
-
-## main findings
-
 
 
 # Code

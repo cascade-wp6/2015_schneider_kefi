@@ -1,4 +1,4 @@
-# Spatially heterogeneous pressure raises risk of catastrophic shifts
+# Spatially explicit grazing raises risk of catastrophic shifts in drylands
 by [Florian Schneider](https://fdschneider.github.io) and [Sonia Kéfi](https://sonia.kefi.fr) ([Institut des Sciences de l'Evolution de Montpellier (ISEM), CNRS, IRD, University of Montpellier 2](http://www.isem.univ-montp2.fr/))  
 
 
@@ -8,19 +8,27 @@ This repository contains the original source code for a simulation study within 
 
 # Project outline
 
-Many ecosystems show abrupt, unexpected responses to external pressures with irreversible alterations in ecological functions and services. Such catastrophic shifts and the search for generic early warning signs have attracted a lot of attention in the literature lately (see Scheffer et al. 2001; Scheffer et al. 2009; Dakos et al. 2012; Kéfi et al. 2014 for recent reviews). Particularly, spatial indicators such as the patch-size distribution, which are relatively easy to assess using remote sensing techniques, could provide useful tools for sustainable land use management (Rietkerk et al. 2004; Kéfi et al. 2007; Kéfi et al. 2014).
+Spatial models of vegetation cover so far have considered grazing mortality a rather constant pressure, affecting all plants equally, regardless of their position in space. In the known models it usually adds as a constant to the individual plant risk ([Kéfi et al 2007 *Theoretical Population Biology*, 71:367--379](http://www.sciencedirect.com/science/article/pii/S0040580906001250)). However, grazing has a strong spatial component: Many plants in rangelands invest in protective structures such as thorns or spines, or develop growth forms that reduce their vulnerability to grazing.
+Therefore, plants growing next to each other benefit from the protection of their neighbors.
 
-Until now, the theoretical foundations of early warning signs of catastrophic shifts have largely assumed that the pressures exerted on ecosystems distribute homogeneously in space. While this may be valid for certain types of pressure (e.g. temperature or precipitation), it is most certainly not true for others such as herbivore foraging. Our manuscript provides a novel perspective on early warning signs of catastrophic shifts in ecosystems by integrating a spatially-explicit pressure in a dryland vegetation model.
+Such **associational resistance** is widely acknowledged in vegetation ecology but hardly integrated in models as a cause for spatially heterogenous grazing pressure. It also renders the plant mortality density dependent, which has important impacts on the bistability of the system.
 
-We show that spatially heterogeneous pressure not only increases the chance of catastrophic shifts at the ecosystem scale but also interferes with the pattern formation process, which alters the nature of the relevant spatial indicators of degradation.
-
-Our manuscript thus contributes to improving the fundamental understanding of dryland functioning and resilience but also more generally to the critical evaluation of the reliability and applicability of spatial indicators of catastrophic shifts in biological systems under spatially-explicit pressures.
+We investigate how the assumption of spatially heterogeneous pressure alters the bistability properties and the response of spatial indicators of catastrophic shifts.
 
 ## approach
 
 Over a dual gradient of environmental and grazing pressure, we simulate  the steady state of vegetation if starting from high vegetation cover. Complementary, we simulate how likely a degraded landscape is to restore if only few plants are left. The overlap of the vegetated state and the persistent desert is the domain of bistability. 
 
 Besides vegetation cover, we investigate which patterns of vegetation establish under the different types of pressure.
+
+## main findings
+
+
+Our results indicate that when ignoring the interfering feedback mechanisms caused by spatially explicit pressure, we might over-estimate ecosystem resilience and impede the success of sustainable management practices. 
+To understand sudden degradation, we must develop more integrative views that extrapolate from spatially heterogeneous feedback mechanisms occurring at the local scale to spatial patterns and resilience at the landscape scale. 
+In the case example of drylands under livestock grazing pressure, this means that we must incorporate spatially-explicit plant mortality due to grazing into our models to see if early warning signs of spatial structure do apply under the given circumstances. 
+More generally, our study warns about the possible effect of spatially heterogeneous pressures on spatial metrics since they may interact with the mechanisms responsible for pattern formation. Thereby, spatially-explicit pressures may alter the qualification of spatial metrics for use as 'early-warning signs' of degradation. 
+We conclude that the identification of the main external pressures involved in pattern formation is a prerequisite for the development of reliable spatial indicators of catastrophic shifts.
 
 
 # Code
@@ -107,7 +115,7 @@ The code contains a switch for associational resistance. If `parameters$assoc ==
 This is the original simulation code used to produce the results of the study. It initialises a list of parameter combinations `iterations`, that iterates environmental quality, b (a sequence from 0 to 1 with a steplength 0.02) and grazing pressure (a sequence from 0 to 0.5 with a steplength of 0.01), which is used to invoke instances of the simulation code on a parallel cluster, using `foreach() %dopar% ` of the foreach package (see below).  
 Each parameter combination is replicated 5--10 times on a landscape that is initialized with randomly distributed plants. The initial vegetation cover is drawn as a uniform random number within the range of 0.8 and 0.9. This simulation serves to evaluate the steady state vegetation cover and spatial pattern arising from each parameter combination.
 
-The result summary that is returned in `result$out` contains mean values of these replicates. Also the cumulative patch size distributions calculated from the final landscapes of the replicates are pooled into an object `dd4` and fitted using the function `PLfit()` (see above).   
+The result summary that is returned in `result$out` contains mean values of these replicates. Also the cumulative patch size distributions calculated from the final landscapes of the replicates are pooled into an object `dd4` and fitted using the function `fitPL()` (see above).   
 
 The lines stored in `result$out` of all parameter sets are merged into one data.frame by the `foreach()` function and stored into a file `output.csv`.  
 

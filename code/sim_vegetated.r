@@ -511,13 +511,13 @@ foreach(iteration = iterations$ID, .combine = rbind) %dopar% {
     dd4 <- do.call("rbind", result$cumpatch)
     p_spanning <- mean(unlist(sapply(1:length(result$cumpatch), function(x) tail(result$cumpatch[[x]]$p, 1)) )) 
     
-    result$fit <- fitPL(dd4, p_spanning, n = result$out$n)
+    result$fit <- fitPL(dd4)
     
-    result$out$best_model = result$fit$best 
+    result$out$best_model = match(result$fit$curvature, c("down","none","up"))+1
   }
   
   
-  result$out$class = c("DEG", "DOWN","PL", "UP", "COV")[result$out$best]
+  result$out$class = c("DEG", "DOWN","PL", "UP", "COV")[result$out$best_model]
   
   }
   

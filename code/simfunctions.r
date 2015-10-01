@@ -129,81 +129,66 @@ patches <- function(x, state) {
 ########################
 
 
-fitPL <- function(psd, p_spanning, n = NULL) {
+
+fitpoly <-  function(data , indices, modelout = FALSE) {
+  model <- lm(log(p) ~  - 1 + log(size) + I(log(size)^2), data = data[indices,] )
+  if(modelout) {return(model)} else {return(coefficients(model)[2])} 
+} 
+fitlm <-  function(data , indices, modelout = FALSE) {
+  model <-lm(log(p) ~  - 1 + log(size), data = data[indices,] )
+  if(modelout) {return(model)} else {return(coefficients(model)[2])} 
+} 
+
+
+fitPL <- function(psd) {
   
   # code of fitted classes
   
-  n_plants <- sum(psd$size * psd$n)/n
+  #n_plants <- sum(psd$size * psd$n)/n
   
   out <- list()
-  out$best <- NA
-  out$AIC <- vector("numeric", length = 3)
-  out$dAIC <- vector("numeric", length = 3)
   
-  # criteria for vegetated state & desert state
   
-  ##### linear power law model for parameter estimation
-  PLlm <- lm(I(log(p)) ~  1 - I(log(size)) , data = psd) 
+  out$psd <- psd   # get cumulative patch size distributions
   
-  ###########
-
-  try( {out$TPLdown <- nls(I(log(p)) ~ I( alpha*log(size)-size*Sx ),
-                           data = psd,
-                           start = list(alpha =  PLlm$coefficients, Sx = 1/200),
-                           #algorithm = "port",
-                           trace = FALSE
-  )}, silent = TRUE
-  )    
   
-  if(!is.null(out$TPLdown) & !coefficients(out$TPLdown)["Sx"] <= 0 ) {
-    out$AIC[1] <- AIC(out$TPLdown) 
-  } else {
-    out$TPLdown <- list(NA)
-    out$AIC[1] <- NA
-  }
+  # do bootstrap fit of polynomial model to test for curvature
   
-  #####
+  b <- boot(psd, fitpoly, R = 999) 
+  ci <- boot.ci(b, type = c("norm"), conf = 0.95)$normal[-1] 
   
-  try({out$PL <- nls(I(log(p)) ~ alpha * log(size), 
-                     data = psd,
-                     start = list( alpha =  PLlm$coefficients ),
-                     trace = FALSE,
-                     nls.control(maxiter = 50)
-  )}, silent = TRUE
+  out$curvature = "none"
+  if( all(ci < 0) ) out$curvature <- "down"
+  if( all(ci > 0) ) out$curvature <- "up"
+  
+  
+  # fit linear power law model as starting value for parameter estimation
+  PLlm <- lm(I(log(p)) ~  1 - I(log(size)) , data = out$psd) 
+  
+  # fit power law model depending on curvature
+  
+  out$model <- switch(out$curvature,
+                      none = nls(I(log(p)) ~ -alpha * log(size), 
+                                 data = out$psd,
+                                 start = list( alpha =  -PLlm$coefficients ),
+                                 trace = FALSE,
+                                 nls.control(maxiter = 50)
+                      ),
+                      down = nls(I(log(p)) ~ I( -alpha*log(size)-size*Sx ),
+                                 data = out$psd,
+                                 start = list(alpha =  -PLlm$coefficients, Sx = 1/200),
+                                 nls.control(maxiter = 50)
+                      ),
+                      up = nls(I(log(p)) ~  log(b) + log(1+(size^(-alpha))/b ) , 
+                               data = out$psd,
+                               start = list( alpha =  -PLlm$coefficients, b = 1e-6) , 
+                               nls.control(maxiter = 50)
+                      )
   )
   
-  if(!is.null(out$PL)) {
-    out$AIC[2] <- AIC(out$PL)
-  } else {
-    out$PL  <- list(NA)
-    out$AIC[2] <- NA
-  }
-  
-  ###########
-  
-  try({out$TPLup <- nls(I(log(p)) ~  log(b) + log(1+(size^(alpha))/b ) , 
-                        data = psd,
-                        start = list( alpha =  PLlm$coefficients, b = p_spanning ) , 
-                        nls.control(maxiter = 50)
-  )}, silent = TRUE
-  )
-  
-  
-  if(!is.null(out$TPLup)) {
-    out$AIC[3] <- AIC(out$TPLup) 
-  } else { 
-    #result$fit$summary$TPLup  <- list(NA)
-    out$TPLup  <- list(NA)
-    out$AIC[3] <- NA
-  }
-  
-  ###########
-  
-  out$dAIC <-   out$AIC -min(out$AIC, na.rm = TRUE)
-  
-  out$best <- which.min(out$AIC)+1
+  class(out) <- "psdfit"
+  return(out)
   
   return(out)
 } 
-
 

@@ -1,4 +1,4 @@
-# Spatially explicit grazing raises risk of catastrophic shifts in drylands
+# Spatially heterogeneous pressure raises risk of catastrophic shifts
 by [Florian Schneider](https://fdschneider.github.io) and [Sonia Kéfi](https://sonia.kefi.fr) ([Institut des Sciences de l'Evolution de Montpellier (ISEM), CNRS, IRD, University of Montpellier 2](http://www.isem.univ-montp2.fr/))  
 
 ---

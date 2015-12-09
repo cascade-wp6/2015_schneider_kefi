@@ -3,11 +3,12 @@ by [Florian Schneider](https://fdschneider.github.io) and [Sonia Kéfi](https://
 
 ---
 
+[![DOI](https://zenodo.org/badge/4927/cascade-wp6/2015_schneider_kefi.svg)](https://zenodo.org/badge/latestdoi/4927/cascade-wp6/2015_schneider_kefi)
+
 This repository contains the original source code for a simulation study within the [CASCADE project](https://www.cascade-project.eu) published in [*Theoretical Ecology*](http://www.springer.com/life+sciences/ecology/journal/12080). 
 
 **article DOI:  [10.1007/s12080-015-0289-1](http://dx.doi.org/10.1007/s12080-015-0289-1)**
   
-
 
 # Project outline
 

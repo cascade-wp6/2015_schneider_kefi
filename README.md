@@ -1,10 +1,13 @@
 # Spatially explicit grazing raises risk of catastrophic shifts in drylands
 by [Florian Schneider](https://fdschneider.github.io) and [Sonia Kéfi](https://sonia.kefi.fr) ([Institut des Sciences de l'Evolution de Montpellier (ISEM), CNRS, IRD, University of Montpellier 2](http://www.isem.univ-montp2.fr/))  
 
-
 ---
 
-This repository contains the original source code for a simulation study within the [CASCADE project](https://www.cascade-project.eu).
+This repository contains the original source code for a simulation study within the [CASCADE project](https://www.cascade-project.eu) published in [*Theoretical Ecology*](http://www.springer.com/life+sciences/ecology/journal/12080). 
+
+**article DOI:  [10.1007/s12080-015-0289-1](http://dx.doi.org/10.1007/s12080-015-0289-1)**
+  
+
 
 # Project outline
 
